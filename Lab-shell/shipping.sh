@@ -1,6 +1,7 @@
 dnf install maven -y
 useradd roboshop
 cp -r shipping.service /etc/systemd/system/shipping.service
+rm -rf /app 
 mkdir /app 
 curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip 
 cd /app 
@@ -12,7 +13,7 @@ systemctl daemon-reload
 systemctl enable shipping 
 systemctl start shipping
 dnf install mysql -y 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/schema.sql
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/app-user.sql 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/db/master-data.sql
+mysql -h mysql-dev.santoshwork.shop -uroot -pRoboShop@1 < /app/db/schema.sql
+mysql -h mysql-dev.santoshwork.shop -uroot -pRoboShop@1 < /app/db/app-user.sql 
+mysql -h mysql-dev.santoshwork.shop -uroot -pRoboShop@1 < /app/db/master-data.sql
 systemctl restart shipping

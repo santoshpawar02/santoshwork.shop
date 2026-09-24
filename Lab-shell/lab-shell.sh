@@ -12,16 +12,16 @@ payment
 dispatch
 
 
-frontend-dev
-mongo-dev
-catalogue-dev
-redis-dev
-user-dev
-cart-dev
-mysql-dev
-shipping-dev
-rabbitmq-dev
-payment-dev
-dispatch-dev
+frontend-dev.santoshwork.shop
+mongo-dev.santoshwork.shop
+catalogue-dev.santoshwork.shop
+redis-dev.santoshwork.shop
+user-dev.santoshwork.shop
+cart-dev.santoshwork.shop
+mysql-dev.santoshwork.shop
+shipping-dev.santoshwork.shop
+rabbitmq-dev.santoshwork.shop
+payment-dev.santoshwork.shop
+dispatch-dev.santoshwork.shop
 
 
