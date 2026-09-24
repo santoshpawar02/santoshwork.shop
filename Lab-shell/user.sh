@@ -10,7 +10,6 @@ cd /app
 unzip /tmp/user.zip
 cd /app 
 npm install 
-cp -r user.service /etc/systemd/system/user.service
 systemctl daemon-reload
 
 systemctl enable user 
