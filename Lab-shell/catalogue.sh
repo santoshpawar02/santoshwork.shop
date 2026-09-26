@@ -15,5 +15,5 @@ unzip /tmp/catalogue.zip
 cd /app 
 npm install 
 dnf install mongodb-mongosh -y
-system_setup
+systemd_setup
 mongosh --host mongo-dev.santoshwork.shop </app/db/master-data.js

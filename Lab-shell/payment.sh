@@ -10,4 +10,4 @@ cd /app
 unzip /tmp/payment.zip
 cd /app 
 pip3 install -r requirements.txt
-system_setup
+systemd_setup

@@ -12,4 +12,4 @@ cd /app
 unzip /tmp/user.zip
 cd /app 
 npm install 
-system_setup
+systemd_setup

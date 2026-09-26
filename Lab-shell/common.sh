@@ -4,3 +4,4 @@ systemd_setup() {
     systemctl enable $component 
     systemctl restart $component
 }
+
