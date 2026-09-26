@@ -1,3 +1,6 @@
+source common.sh
+component=catalogue
+
 dnf module disable nodejs -y
 dnf module enable nodejs:20 -y
 dnf install nodejs -y
@@ -12,5 +15,5 @@ unzip /tmp/catalogue.zip
 cd /app 
 npm install 
 dnf install mongodb-mongosh -y
-systemctl daemon-reload
+system_setup
 mongosh --host mongo-dev.santoshwork.shop </app/db/master-data.js
