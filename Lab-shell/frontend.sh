@@ -19,7 +19,7 @@ cp -r nginx.conf /etc/nginx/nginx.conf
 
 rm -rf /usr/share/nginx/html/* &>> $log_file
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip  &>> $log_file
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip 
 exit_status_print $?
 cd /usr/share/nginx/html 
 unzip /tmp/frontend.zip &>> $log_file
