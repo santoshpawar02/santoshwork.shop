@@ -24,10 +24,11 @@ artifact_download() {
     rm -rf /app &>>$log_file
     exit_status_print $?
     mkdir /app &>>$log_file
-    curl -L -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>$log_file
+    curl -L -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component-v3.zip &>>$log_file
     exit_status_print $?
     cd /app 
     unzip /tmp/$component.zip &>>$log_file
+    exit_status_print $?
 }
 
 
