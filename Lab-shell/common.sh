@@ -1,21 +1,31 @@
 systemd_setup() {
     print_head "Setting up systemd service for $component"
-    cp -r $component.service /etc/systemd/system/$component.service &>>$log_file
+    cp -r $pwd/$component.service /etc/systemd/system/$component.service &>>$log_file
+    exit_status_print $?
     print_head "Reloading systemd daemon..."
     systemctl daemon-reload &>>$log_file
+    exit_status_print $?
     print_head "Enabling $component service..."
     systemctl enable $component &>>$log_file
+    exit_status_print $?
     print_head "Restarting $component service..."
     systemctl restart $component &>>$log_file
+    exit_status_print $?
 }
 
 artifact_download() {
     print_head "Adding roboshop user..."
-    useradd roboshop &>>$log_file 
+    id roboshop &>>$log_file
+    if [ $? -ne 0 ]; then           
+        useradd roboshop &>>$log_file 
+    fi
+    exit_status_print $?        
     print_head "Downloading $component artifact..."
     rm -rf /app &>>$log_file
+    exit_status_print $?
     mkdir /app &>>$log_file
     curl -L -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component.zip &>>$log_file
+    exit_status_print $?
     cd /app 
     unzip /tmp/$component.zip &>>$log_file
 }
@@ -25,15 +35,20 @@ artifact_download() {
 nodejs_app_setup() {
     print_head "Setting up $component NodeJS service..."
     dnf module disable nodejs -y &>>$log_file
+    exit_status_print $?
+
     dnf module enable nodejs:20 -y &>>$log_file
+    exit_status_print $?    
     print_head "Installing NodeJS"
     dnf install nodejs -y &>>$log_file
+    exit_status_print $?
     print_head "Setting up $component prerequisites..."
     
     artifact_download
     cd /app 
     print_head "Installing NodeJS Dependencies"
     npm install &>>$log_file
+    exit_status_print $?
     systemd_setup
 }
 
@@ -41,6 +56,7 @@ nodejs_app_setup() {
 maven_app_setup() {
     print_head "Setting up $component Maven service..."
     dnf install maven -y &>>$log_file
+    exit_status_print $?
     print_head "Setting up $component prerequisites..."
     
     artifact_download
@@ -55,12 +71,14 @@ maven_app_setup() {
 python_app_setup() {
     print_head "Setting up $component Python service..."
     dnf install python36 gcc python3-devel -y &>>$log_file
+    exit_status_print $?    
     print_head "Setting up $component prerequisites"
     
     artifact_download
     cd /app 
     print_head "Installing Python Dependencies"
     pip3.6 install -r requirements.txt &>>$log_file
+    exit_status_print $?
     systemd_setup
 }
 
@@ -74,3 +92,16 @@ print_head (){
 
 log_file="/tmp/roboshop.log"
 rm -f $log_file
+
+
+exit_status_print() {
+  if [ $1 -eq 0 ]; then
+    echo -e "\e[32m >> SUCCESS\e[0m"
+  else
+    echo -e "\e[31m >> FAILURE\e[0m"
+    echo "Refer to the log file /tmp/roboshop.log for more information"
+    exit 1
+  fi
+}
+
+pwd=$(pwd)
