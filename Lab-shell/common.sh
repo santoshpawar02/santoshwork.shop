@@ -2,13 +2,9 @@ systemd_setup() {
     print_head "Setting up systemd service for $component"
     cp -r $pwd/$component.service /etc/systemd/system/$component.service &>>$log_file
     exit_status_print $?
-    print_head "Reloading systemd daemon..."
+    print_head "Starting $component service"
     systemctl daemon-reload &>>$log_file
-    exit_status_print $?
-    print_head "Enabling $component service..."
     systemctl enable $component &>>$log_file
-    exit_status_print $?
-    print_head "Restarting $component service..."
     systemctl restart $component &>>$log_file
     exit_status_print $?
 }
@@ -20,10 +16,13 @@ artifact_download() {
         useradd roboshop &>>$log_file 
     fi
     exit_status_print $?        
-    print_head "Downloading $component artifact..."
+    print_head "Removing old content if any..."
     rm -rf /app &>>$log_file
     exit_status_print $?
+    print_head "Creating application directory..."
     mkdir /app &>>$log_file
+    exit_status_print $?
+    print_head "Downloading $component artifact..."
     curl -L -o /tmp/$component.zip https://roboshop-artifacts.s3.amazonaws.com/$component-v3.zip &>>$log_file
     exit_status_print $?
     cd /app 
