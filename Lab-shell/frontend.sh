@@ -1,13 +1,3 @@
-print_head (){
-  echo -e "\e[32m$*\e[0m"
-  echo -e "\e[32m############################\e[0m" &>>$log_file
-  echo -e "\e[32m$*\e[0m" &>>$log_file
-  echo -e "\e[32m############################\e[0m" &>>$log_file
-}
-
-log_file="/tmp/roboshop.log"
-rm -f $log_file
-
 source common.sh
 component=frontend
 
@@ -24,9 +14,9 @@ dnf install nginx -y    &>> $log_file
 
 
 
-rm -rf /usr/share/nginx/html/* 
+rm -rf /usr/share/nginx/html/* &>> $log_file
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip  &>> $log_file
 
 cd /usr/share/nginx/html 
 unzip /tmp/frontend.zip &>> $log_file
