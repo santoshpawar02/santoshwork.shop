@@ -99,6 +99,9 @@ exit_status_print() {
     echo -e "\e[32m >> SUCCESS\e[0m"
   else
     echo -e "\e[31m >> FAILURE\e[0m"
+    lno=$(cat -n $log_file | tail -n 10)
+    echo -e "\e[31mLast 10 lines of log file:\e[0m"
+    echo -e "\e[31m$lno\e[0m"
     echo "Refer to the log file /tmp/roboshop.log for more information"
     exit 1
   fi
