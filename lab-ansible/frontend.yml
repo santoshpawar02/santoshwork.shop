@@ -3,21 +3,19 @@
   become: true
   tasks:
     - name: Disabling Nginx
-      dnf:
-        name: nginx
-        state: absent
-        module: nginx
-        module_state: disabled
+      ansible.builtin.shell:
+        cmd: dnf module disable nginx -y
     - name: Enabling Nginx
-      dnf:
-        name: nginx:1.24
-        state: present
-        module: nginx
-        module_state: enabled
+      ansible.builtin.shell:
+        cmd: dnf module enable nginx:1.24 -y
     - name: Installing Nginx
-      dnf:
+      ansible.builtin.dnf:
         name: nginx
         state: present
+    - name: reStart Nginx service
+      ansible.builtin.service:
+      name: nginx
+      state: restarted
 # source common.sh
 # component=frontend
 
