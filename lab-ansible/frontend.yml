@@ -14,8 +14,8 @@
         state: present
     - name: reStart Nginx service
       ansible.builtin.service:
-      name: nginx
-      state: restarted
+        name: nginx
+        state: restarted
 # source common.sh
 # component=frontend
 
